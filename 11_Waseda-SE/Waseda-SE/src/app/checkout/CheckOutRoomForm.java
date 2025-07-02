@@ -23,6 +23,8 @@ public class CheckOutRoomForm {
 		/**
 		 * Your code for conducting check-out by using some Control object  
 		 */
+		String roomNum = getRoomNumber();
+		getCheckOutRoomControl().checkOut(roomNum);
 	}
 
 	public String getRoomNumber() {
