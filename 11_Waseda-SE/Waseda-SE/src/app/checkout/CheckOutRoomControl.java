@@ -24,12 +24,12 @@ public class CheckOutRoomControl {
 			/*
 			 * Your code for clearing room by using domain.room.RoomManager
 			 */
-			getRoomManager().clearRoom(roomNumber);
+			Date stayingDate = getRoomManager().removeCustomer(roomNumber);
 			//Consume payment
 			/*
 			 * Your code for consuming payment by using domain.payment.PaymentManager
 			 */
-			getPaymentManager().consumePayment(roomNumber);
+			getPaymentManager().consumePayment(stayingDate, roomNumber);
 		}
 		catch (RoomException e) {
 			AppException exception = new AppException("Failed to check-out", e);
