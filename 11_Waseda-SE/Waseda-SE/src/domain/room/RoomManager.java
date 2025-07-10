@@ -116,4 +116,19 @@ public class RoomManager {
 	private RoomDao getRoomDao() {
 		return DaoFactory.getInstance().getRoomDao();
 	}
+
+	// get room infomation
+	public Room getRoom(String roomNumber) throws RoomException {
+		if (roomNumber == null) {
+			throw new NullPointerException("roomNumber");
+        }
+        RoomDao roomDao = getRoomDao();
+        Room room = roomDao.getRoom(roomNumber);
+        if (room == null) {
+			RoomException exception = new RoomException(RoomException.CODE_ROOM_NOT_FOUND);
+            exception.getDetailMessages().add("room_number[" + roomNumber + "]");
+            throw exception;
+        }
+        return room;
+    }
 }
