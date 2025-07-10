@@ -88,16 +88,4 @@ public class ReservationManager {
 			exception.getDetailMessages().add("reservation_number[" + reservationNumber + "]");
 			throw exception;
 		}
-		// すでに消費済み（チェックイン済み）かどうかをチェック
-		if (reservation.getStatus().equals(Reservation.RESERVATION_STATUS_CONSUME)) {
-			throw new ReservationException(ReservationException.CODE_RESERVATION_ALREADY_CONSUMED);
-
-		}
-		// キャンセル状態にする
-		reservation.setStatus("cancelled");
-		reservationDao.updateReservation(reservation);
-	}
-
-
-
-}
+		// 縺吶〒縺ｫ豸郁ｲｻ貂医∩

@@ -17,6 +17,29 @@ public class ReserveRoomForm {
 
 	private Date stayingDate;
 
+
+
+	// 予約番号を覚える場所を追加
+	private String reservationNumber;
+
+	// 予約番号をセットするメソッド
+	public void setReservationNumber(String reservationNumber) {
+		this.reservationNumber = reservationNumber;
+	}
+
+	// 予約番号を取得するメソッド
+	public String getReservationNumber() {
+		return reservationNumber;
+	}
+
+	// 予約キャンセル用のメソッド
+	public void cancelReservation() throws AppException {
+		ReserveRoomControl control = getReserveRoomHandler();
+		control.cancelReservation(reservationNumber);
+	}
+
+
+
 	private ReserveRoomControl getReserveRoomHandler() {
 		return reserveRoomHandler;
 	}

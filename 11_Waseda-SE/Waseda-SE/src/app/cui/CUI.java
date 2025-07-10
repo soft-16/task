@@ -37,6 +37,7 @@ public class CUI {
 				System.out.println("1: Reservation");
 				System.out.println("2: Check-in");
 				System.out.println("3: Check-out");
+				System.out.println("4: Cancel reservation");
 				System.out.println("9: End");
 				System.out.print("> ");
 
@@ -61,6 +62,9 @@ public class CUI {
 						break;
 					case 3:
 						checkOutRoom();
+						break;
+					case 4:
+						cancelReservation();
 						break;
 				}
 			}
@@ -133,6 +137,26 @@ public class CUI {
 		checkoutRoomForm.checkOut();
 		System.out.println("Check-out has been completed.");
 	}
+
+
+
+	private void cancelReservation() throws IOException, AppException {
+		System.out.println("Input reservation number to cancel");
+		System.out.print("> ");
+		String reservationNumber = reader.readLine();
+
+		if (reservationNumber == null || reservationNumber.length() == 0) {
+			System.out.println("Invalid reservation number");
+			return;
+		}
+
+		app.reservation.ReserveRoomForm form = new app.reservation.ReserveRoomForm();
+		form.setReservationNumber(reservationNumber);
+		form.cancelReservation();
+		System.out.println("Reservation has been canceled.");
+	}
+
+
 
 	public static void main(String[] args) throws Exception {
 		CUI cui = new CUI();

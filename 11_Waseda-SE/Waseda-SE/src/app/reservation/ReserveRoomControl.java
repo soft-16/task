@@ -45,6 +45,22 @@ public class ReserveRoomControl {
 		}
 	}
 
+
+
+    public void cancelReservation(String reservationNumber) throws AppException {
+        try {
+            ReservationManager reservationManager = getReservationManager();
+            reservationManager.cancelReservation(reservationNumber);
+        } catch (ReservationException e) {
+            AppException exception = new AppException("Cancel failed", e);
+            exception.getDetailMessages().add(e.getMessage());
+            exception.getDetailMessages().addAll(e.getDetailMessages());
+            throw exception;
+        }
+    }
+	
+
+
 	private RoomManager getRoomManager() {
 		return ManagerFactory.getInstance().getRoomManager();
 	}
