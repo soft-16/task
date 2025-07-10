@@ -16,6 +16,7 @@ import domain.room.RoomException;
  * Control class for Check-out Customer
  * 
  */
+
 public class CheckOutRoomControl {
 	
 	public void checkOut(String roomNumber) throws AppException {
@@ -24,12 +25,27 @@ public class CheckOutRoomControl {
 			/*
 			 * Your code for clearing room by using domain.room.RoomManager
 			 */
+			// to get accommodation information
 			Date stayingDate = getRoomManager().removeCustomer(roomNumber);
-			//Consume payment
+
 			/*
 			 * Your code for consuming payment by using domain.payment.PaymentManager
 			 */
+			// to get payment information
+			int amount = getPaymentManager().getPaymentAmount(stayingDate, roomNumber);
+            System.out.println("Checkout fee is " + amount + " yen. Proceed with payment? (y/n)");
+			// user confirmation entry
+			java.util.Scanner scanner = new java.util.Scanner(System.in);
+			String input = scanner.nextLine();
+			if (!input.equalsIgnoreCase("y")) {
+				System.out.println("Checkout process canceled.");
+                return;
+            }
+
+			//Consume payment
 			getPaymentManager().consumePayment(stayingDate, roomNumber);
+			System.out.println("Payment completed. Thank you!");
+			
 		}
 		catch (RoomException e) {
 			AppException exception = new AppException("Failed to check-out", e);
@@ -53,3 +69,5 @@ public class CheckOutRoomControl {
 		return ManagerFactory.getInstance().getPaymentManager();
 	}
 }
+
+	
