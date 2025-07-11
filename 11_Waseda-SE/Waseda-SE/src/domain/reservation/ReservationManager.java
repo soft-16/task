@@ -56,6 +56,18 @@ public class ReservationManager {
 			exception.getDetailMessages().add("reservation_number[" + reservationNumber + "]");
 			throw exception;
 		}
+
+
+		// Check if reservation is cancelled
+	    if ("cancelled".equals(reservation.getStatus())) {
+    	    ReservationException exception = new ReservationException(
+        	        ReservationException.CODE_RESERVATION_ALREADY_CONSUMED);
+	        exception.getDetailMessages().add("reservation_number[" + reservationNumber + "]");
+    	    exception.getDetailMessages().add("Reservation is cancelled and cannot be consumed");
+        	throw exception;
+    	}
+
+
 		//If reservation has been consumed already
 		if (reservation.getStatus().equals(Reservation.RESERVATION_STATUS_CONSUME)) {
 			ReservationException exception = new ReservationException(
