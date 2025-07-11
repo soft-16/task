@@ -17,6 +17,24 @@ public class ReserveRoomForm {
 
 	private Date stayingDate;
 
+
+	// Added reservation cancelation feature using reservation number
+	private String reservationNumber;
+
+	public void setReservationNumber(String reservationNumber) {
+		this.reservationNumber = reservationNumber;
+	}
+
+	public String getReservationNumber() {
+		return reservationNumber;
+	}
+
+	public void cancelReservation() throws AppException {
+		ReserveRoomControl control = getReserveRoomHandler();
+		control.cancelReservation(reservationNumber);
+	}
+
+
 	private ReserveRoomControl getReserveRoomHandler() {
 		return reserveRoomHandler;
 	}

@@ -56,6 +56,18 @@ public class ReservationManager {
 			exception.getDetailMessages().add("reservation_number[" + reservationNumber + "]");
 			throw exception;
 		}
+
+
+		// Check if reservation is cancelled
+	    if ("cancelled".equals(reservation.getStatus())) {
+    	    ReservationException exception = new ReservationException(
+        	        ReservationException.CODE_RESERVATION_ALREADY_CONSUMED);
+	        exception.getDetailMessages().add("reservation_number[" + reservationNumber + "]");
+    	    exception.getDetailMessages().add("Reservation is cancelled and cannot be consumed");
+        	throw exception;
+    	}
+
+
 		//If reservation has been consumed already
 		if (reservation.getStatus().equals(Reservation.RESERVATION_STATUS_CONSUME)) {
 			ReservationException exception = new ReservationException(
@@ -73,4 +85,32 @@ public class ReservationManager {
 	private ReservationDao getReservationDao() {
 		return DaoFactory.getInstance().getReservationDao();
 	}
+
+
+	// Cancels a reservation if it exists and is not already consumed
+	public void cancelReservation(String reservationNumber) throws ReservationException {
+		if (reservationNumber == null) {
+			throw new NullPointerException("reservationNumber");
+		}
+
+		ReservationDao reservationDao = getReservationDao();
+		Reservation reservation = reservationDao.getReservation(reservationNumber);
+
+		if (reservation == null) {
+			ReservationException exception = new ReservationException(
+				ReservationException.CODE_RESERVATION_NOT_FOUND);
+			exception.getDetailMessages().add("reservation_number[" + reservationNumber + "]");
+			throw exception;
+		}
+		
+		if (reservation.getStatus().equals(Reservation.RESERVATION_STATUS_CONSUME)) {
+			throw new ReservationException(ReservationException.CODE_RESERVATION_ALREADY_CONSUMED);
+
+		}
+
+		reservation.setStatus("cancelled");
+		reservationDao.updateReservation(reservation);
+	}
+
+
 }

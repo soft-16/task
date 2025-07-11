@@ -26,25 +26,29 @@ public class CheckOutRoomControl {
 			 * Your code for clearing room by using domain.room.RoomManager
 			 */
 			// to get accommodation information
-			Date stayingDate = getRoomManager().removeCustomer(roomNumber);
+
 
 			/*
 			 * Your code for consuming payment by using domain.payment.PaymentManager
 			 */
 			// to get payment information
+			Date stayingDate = getRoomManager().getRoom(roomNumber).getStayingDate();
+			if (stayingDate == null) {
+				throw new RoomException(RoomException.CODE_ROOM_NOT_FULL);
+                        }
 			int amount = getPaymentManager().getPaymentAmount(stayingDate, roomNumber);
-            System.out.println("Checkout fee is " + amount + " yen. Proceed with payment? (y/n)");
-			// user confirmation entry
+			System.out.println("Checkout fee is " + amount + " yen. Proceed with payment? (y/n)");
 			java.util.Scanner scanner = new java.util.Scanner(System.in);
 			String input = scanner.nextLine();
 			if (!input.equalsIgnoreCase("y")) {
-				System.out.println("Checkout process canceled.");
-                return;
-            }
+				throw new AppException("Checkout processs cancelled.");
+                        }
 
-			//Consume payment
+                        getRoomManager().removeCustomer(roomNumber);
 			getPaymentManager().consumePayment(stayingDate, roomNumber);
-			System.out.println("Payment completed. Thank you!");
+
+                        System.out.println("Payment completed. Thank you!");
+
 			
 		}
 		catch (RoomException e) {

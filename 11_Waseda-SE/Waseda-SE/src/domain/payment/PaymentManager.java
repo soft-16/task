@@ -77,4 +77,13 @@ public class PaymentManager {
 	private PaymentDao getPaymentDao() {
 		return DaoFactory.getInstance().getPaymentDao();
 	}
+	
+        // change point
+	public int getPaymentAmount(Date stayingDate, String roomNumber) throws PaymentException {
+		Payment payment = getPaymentDao().getPayment(stayingDate, roomNumber);
+		if (payment == null) {
+			throw new PaymentException(PaymentException.CODE_PAYMENT_NOT_FOUND);
+                }
+                return payment.getAmount();
+        }
 }
