@@ -75,29 +75,30 @@ public class ReservationManager {
 	}
 
 
-
+	// Cancels a reservation if it exists and is not already consumed
 	public void cancelReservation(String reservationNumber) throws ReservationException {
 		if (reservationNumber == null) {
 			throw new NullPointerException("reservationNumber");
 		}
+
 		ReservationDao reservationDao = getReservationDao();
 		Reservation reservation = reservationDao.getReservation(reservationNumber);
+
 		if (reservation == null) {
 			ReservationException exception = new ReservationException(
 				ReservationException.CODE_RESERVATION_NOT_FOUND);
 			exception.getDetailMessages().add("reservation_number[" + reservationNumber + "]");
 			throw exception;
 		}
-		// すでに消費済み（チェックイン済み）かどうかをチェック
+		
 		if (reservation.getStatus().equals(Reservation.RESERVATION_STATUS_CONSUME)) {
 			throw new ReservationException(ReservationException.CODE_RESERVATION_ALREADY_CONSUMED);
 
 		}
-		// キャンセル状態にする
+
 		reservation.setStatus("cancelled");
 		reservationDao.updateReservation(reservation);
 	}
-
 
 
 }

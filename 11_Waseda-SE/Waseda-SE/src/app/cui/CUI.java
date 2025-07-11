@@ -37,7 +37,10 @@ public class CUI {
 				System.out.println("1: Reservation");
 				System.out.println("2: Check-in");
 				System.out.println("3: Check-out");
+
+				// Menu option for canceling a reservation added
 				System.out.println("4: Cancel reservation");
+
 				System.out.println("9: End");
 				System.out.print("> ");
 
@@ -63,9 +66,12 @@ public class CUI {
 					case 3:
 						checkOutRoom();
 						break;
+
+					// Method call for canceling a reservation added
 					case 4:
 						cancelReservation();
 						break;
+
 				}
 			}
 			System.out.println("Ended");
@@ -139,7 +145,7 @@ public class CUI {
 	}
 
 
-
+	// Method to handle reservation cancellation
 	private void cancelReservation() throws IOException, AppException {
 		System.out.println("Input reservation number to cancel");
 		System.out.print("> ");
@@ -155,7 +161,6 @@ public class CUI {
 		form.cancelReservation();
 		System.out.println("Reservation has been canceled.");
 	}
-
 
 
 	public static void main(String[] args) throws Exception {

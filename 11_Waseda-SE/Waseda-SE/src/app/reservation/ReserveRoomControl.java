@@ -46,7 +46,7 @@ public class ReserveRoomControl {
 	}
 
 
-
+	// Added method to cancel reservation by number
     public void cancelReservation(String reservationNumber) throws AppException {
         try {
             ReservationManager reservationManager = getReservationManager();
@@ -59,7 +59,6 @@ public class ReserveRoomControl {
         }
     }
 	
-
 
 	private RoomManager getRoomManager() {
 		return ManagerFactory.getInstance().getRoomManager();
