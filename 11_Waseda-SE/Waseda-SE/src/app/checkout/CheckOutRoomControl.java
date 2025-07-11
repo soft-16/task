@@ -16,6 +16,7 @@ import domain.room.RoomException;
  * Control class for Check-out Customer
  * 
  */
+
 public class CheckOutRoomControl {
 	
 	public void checkOut(String roomNumber) throws AppException {
@@ -25,6 +26,7 @@ public class CheckOutRoomControl {
 			 * Your code for clearing room by using domain.room.RoomManager
 			 */
 			// to get accommodation information
+
 
 			/*
 			 * Your code for consuming payment by using domain.payment.PaymentManager
@@ -46,6 +48,7 @@ public class CheckOutRoomControl {
 			getPaymentManager().consumePayment(stayingDate, roomNumber);
 
                         System.out.println("Payment completed. Thank you!");
+
 			
 		}
 		catch (RoomException e) {
@@ -70,3 +73,5 @@ public class CheckOutRoomControl {
 		return ManagerFactory.getInstance().getPaymentManager();
 	}
 }
+
+	
